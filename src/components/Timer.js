@@ -5,15 +5,23 @@ import './timer.css';
 const Timer = () => {
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
-  const [workInterval, setWorkInterval] = useState(10);
-  const [time, setTime] = useState(null);
+  const [workInterval, setWorkInterval] = useState(5);
+  const [workTimer, setWorkTimer] = useState(5);
+  const [futureTime, setFutureTime] = useState(null);
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const pace = () => {
-    const secondsRemaining = differenceInSeconds(time, new Date());
+    const secondsRemaining = differenceInSeconds(futureTime, new Date());
 
-    if (secondsRemaining !== workInterval) {
+    if (secondsRemaining !== workInterval || workInterval === 0) {
       setWorkInterval(workInterval - 1);
       setSeconds(secondsRemaining);
+    }
+
+    if (secondsRemaining <= 0) {
+      setIsActive(!isActive);
+      setWorkInterval(workTimer);
+      console.log(workTimer, workInterval);
     }
   };
 
@@ -26,16 +34,25 @@ const Timer = () => {
   }, [isActive, pace]);
 
   const toggleTimer = () => {
-    setTime(addSeconds(new Date(), workInterval));
+    setFutureTime(addSeconds(new Date(), workInterval));
     setIsActive(!isActive);
-    // clearInterval();
   };
+
+  const handleWorkInterval = (e) => {
+    e.preventDefault();
+    setWorkTimer(e.target.value * 60);
+    setWorkInterval(e.target.value * 60);
+  };
+
   return (
     <div className="app">
+      <h1>Work Time: {workTimer}</h1>
+      <h1>Work Interval: {workInterval}</h1>
       <h1>{seconds}</h1>
+
       <input
         type="number"
-        onChange={(e) => setWorkInterval(e.target.value * 60)}
+        onChange={(e) => handleWorkInterval(e)}
         defaultValue={workInterval}
       />
       <button onClick={toggleTimer}>{isActive ? 'Stop' : 'Start'}</button>
