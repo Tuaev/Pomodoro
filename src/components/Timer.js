@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { differenceInSeconds, addSeconds } from 'date-fns';
+import { differenceInSeconds, addSeconds, intervalToDuration } from 'date-fns';
 import './timer.css';
+import Clock from './Clock';
 
 const Timer = () => {
-  const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [workInterval, setWorkInterval] = useState(5);
   const [workTimer, setWorkTimer] = useState(5);
+  const [breakTimer, setBreakTimer] = useState(3);
   const [futureTime, setFutureTime] = useState(null);
+  const [cycle, setCycle] = useState('work');
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const pace = () => {
@@ -15,13 +17,18 @@ const Timer = () => {
 
     if (secondsRemaining !== workInterval || workInterval === 0) {
       setWorkInterval(workInterval - 1);
-      setSeconds(secondsRemaining);
     }
 
     if (secondsRemaining <= 0) {
+      if (cycle === 'work') {
+        setCycle('break');
+        setWorkInterval(breakTimer);
+      } else {
+        setCycle('work');
+        setWorkInterval(workTimer);
+      }
+
       setIsActive(!isActive);
-      setWorkInterval(workTimer);
-      console.log(workTimer, workInterval);
     }
   };
 
@@ -44,11 +51,18 @@ const Timer = () => {
     setWorkInterval(e.target.value * 60);
   };
 
+  const resetTimer = () => {
+    setFutureTime(addSeconds(new Date(), workInterval));
+    setWorkInterval(workTimer);
+  };
+
   return (
     <div className="app">
-      <h1>Work Time: {workTimer}</h1>
-      <h1>Work Interval: {workInterval}</h1>
-      <h1>{seconds}</h1>
+      {/* <h1>Cycle: {cycle}</h1> */}
+      {/* <h1>Work Time: {workTimer}</h1> */}
+      {/* <h1>Work Interval: {workInterval}</h1> */}
+
+      <Clock cycle={cycle} workInterval={workInterval} />
 
       <input
         type="number"
@@ -56,6 +70,7 @@ const Timer = () => {
         defaultValue={workInterval}
       />
       <button onClick={toggleTimer}>{isActive ? 'Stop' : 'Start'}</button>
+      <button onClick={resetTimer}>Reset</button>
     </div>
   );
 };
