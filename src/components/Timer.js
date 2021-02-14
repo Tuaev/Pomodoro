@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { differenceInSeconds, addSeconds, intervalToDuration } from 'date-fns';
+import { differenceInSeconds, addSeconds } from 'date-fns';
 import './timer.css';
 import Clock from './Clock';
 
@@ -9,7 +9,7 @@ const Timer = () => {
   const [workTimer, setWorkTimer] = useState(25);
   const [breakTimer, setBreakTimer] = useState(3);
   const [futureTime, setFutureTime] = useState(null);
-  const [cycle, setCycle] = useState('work');
+  const [cycle, setCycle] = useState('Work');
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const pace = () => {
@@ -20,11 +20,11 @@ const Timer = () => {
     }
 
     if (secondsRemaining <= 0) {
-      if (cycle === 'work') {
-        setCycle('short');
+      if (cycle === 'Work') {
+        setCycle('Short');
         setWorkInterval(breakTimer);
       } else {
-        setCycle('work');
+        setCycle('Work');
         setWorkInterval(workTimer);
       }
 

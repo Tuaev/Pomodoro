@@ -16,7 +16,7 @@ function Clock({ cycle, workInterval }) {
     const seconds =
       secondsInterval.length === 1 ? '0' + secondsInterval : secondsInterval;
 
-    return `${minutes} : ${seconds}`;
+    return `${minutes}:${seconds}`;
   };
 
   return (
