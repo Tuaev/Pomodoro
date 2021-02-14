@@ -5,8 +5,8 @@ import Clock from './Clock';
 
 const Timer = () => {
   const [isActive, setIsActive] = useState(false);
-  const [workInterval, setWorkInterval] = useState(5);
-  const [workTimer, setWorkTimer] = useState(5);
+  const [workInterval, setWorkInterval] = useState(1500);
+  const [workTimer, setWorkTimer] = useState(25);
   const [breakTimer, setBreakTimer] = useState(3);
   const [futureTime, setFutureTime] = useState(null);
   const [cycle, setCycle] = useState('work');
@@ -21,7 +21,7 @@ const Timer = () => {
 
     if (secondsRemaining <= 0) {
       if (cycle === 'work') {
-        setCycle('break');
+        setCycle('short');
         setWorkInterval(breakTimer);
       } else {
         setCycle('work');
@@ -58,19 +58,28 @@ const Timer = () => {
 
   return (
     <div className="app">
-      {/* <h1>Cycle: {cycle}</h1> */}
-      {/* <h1>Work Time: {workTimer}</h1> */}
-      {/* <h1>Work Interval: {workInterval}</h1> */}
-
-      <Clock cycle={cycle} workInterval={workInterval} />
-
-      <input
-        type="number"
-        onChange={(e) => handleWorkInterval(e)}
-        defaultValue={workInterval}
-      />
-      <button onClick={toggleTimer}>{isActive ? 'Stop' : 'Start'}</button>
-      <button onClick={resetTimer}>Reset</button>
+      <h3>Pomodoro</h3>
+      <div className="stopwatch-card">
+        <Clock cycle={cycle} workInterval={workInterval} />
+        <select onChange={(e) => handleWorkInterval(e)} disabled={isActive}>
+          <option value="25">25 minutes</option>
+          <option value="35">35 minutes</option>
+          <option value="45">45 minutes</option>
+          <option value="55">55 minutes</option>
+        </select>
+        <div className="buttons">
+          <span>
+            <button className="button" onClick={toggleTimer}>
+              {isActive ? 'Stop' : 'Start'}
+            </button>
+            {!isActive && (
+              <button className="button" onClick={resetTimer}>
+                Reset
+              </button>
+            )}
+          </span>
+        </div>
+      </div>
     </div>
   );
 };

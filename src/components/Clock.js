@@ -1,32 +1,28 @@
 import { intervalToDuration } from 'date-fns';
-import { useState } from 'react';
-
-function Clock({ workInterval }) {
-  const [formatMinutes, setFormatMinutes] = useState(10);
-  const [formatSeconds, setFormatSeconds] = useState(0);
-
+import './timer.css';
+function Clock({ cycle, workInterval }) {
   const formatTime = () => {
-    const minutesInterval = intervalToDuration({ start: 0, end: workInterval * 1000 })
-      .minutes;
-    const secondsInterval = intervalToDuration({ start: 0, end: workInterval * 1000 })
-      .seconds;
+    const minutesInterval = intervalToDuration({
+      start: 0,
+      end: workInterval * 1000,
+    }).minutes.toString();
+    const secondsInterval = intervalToDuration({
+      start: 0,
+      end: workInterval * 1000,
+    }).seconds.toString();
 
     const minutes =
-      minutesInterval.toString().length === 1 ? '0' + minutesInterval : minutesInterval;
+      minutesInterval.length === 1 ? '0' + minutesInterval : minutesInterval;
     const seconds =
-      secondsInterval.toString().length === 1 ? '0' + secondsInterval : secondsInterval;
+      secondsInterval.length === 1 ? '0' + secondsInterval : secondsInterval;
 
-    console.log();
     return `${minutes} : ${seconds}`;
   };
 
   return (
     <div>
-      <p>{formatTime()}</p>
-      <span>
-        {intervalToDuration({ start: 0, end: workInterval * 1000 }).minutes} :{' '}
-        {intervalToDuration({ start: 0, end: workInterval * 1000 }).seconds}
-      </span>
+      <h1>{cycle}</h1>
+      <p className="time">{formatTime()}</p>
     </div>
   );
 }

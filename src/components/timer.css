@@ -1,47 +1,57 @@
+body {
+  margin: 0;
+  background-color: #eceff1;
+  color: #010b40;
+}
+
 .app {
+  background-color: #0e4d92;
+  margin: 0 auto;
+  width: 300px;
+  height: 300px;
+  position: relative;
+  border-radius: 10px;
+}
+
+h3 {
+  color: white;
   text-align: center;
-  background-color: #282c34;
-  min-height: 100vh;
+  padding-top: 8px;
+  letter-spacing: 1.2px;
+  font-weight: 500;
+}
+
+p {
+  font-size: 28px;
+}
+
+.stopwatch-card {
+  position: absolute;
+  text-align: center;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  width: 325px;
+  height: 230px;
+  top: 160px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+}
+
+button {
+  outline: none;
+  background: transparent;
+  border: 1px solid blue;
+  padding: 5px 10px;
+  border-radius: 7px;
+  color: blue;
+  cursor: pointer;
+}
+
+.buttons {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.time {
-  font-size: 3rem;
-  padding: 2rem;
-}
-
-.button {
-  padding: 0.6rem 1.5rem;
-  margin: 0.4rem;
-  border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: 0.8rem;
-  border-style: groove;
-}
-
-.button:focus {
-  outline-width: 0;
-}
-
-.button-primary:hover {
-  background-color: #2641d4;
-  border: 1px solid #1b1f2b;
-}
-
-.button-primary-active {
-  background-color: #3151ff;
-  border: 1px solid #152684;
-  color: white;
-}
-
-.button-primary-inactive {
-  background-color: #3151ff;
-  border: 1px solid #152684;
-  color: white;
+  justify-content: space-evenly;
+  width: 150px;
+  margin: 0 auto;
+  margin-top: 5px;
 }
